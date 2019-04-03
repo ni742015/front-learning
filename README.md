@@ -1,6 +1,6 @@
-2019仟迈前端3周速成学习项目
+# 2019仟迈前端3周速成学习项目
 
-学习目标：
+## 学习目标：
 
 第一周前端基础速成
 1. 开发环境工具搭建，git仓库克隆
@@ -23,7 +23,7 @@
 4. typescript学习 + 练习
 5. 项目代码了解
 
-学习资料：
+## 学习资料：
 * [环境搭建文档](https://www.yuque.com/dbqn45/mqz8yl/uinrdv)
 * [前端入门手册](https://www.yuque.com/fe9/basic/typescript-0)
 * [react小册](http://huziketang.mangojuice.top/books/react/)
