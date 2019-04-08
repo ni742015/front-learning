@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HTML 示例</title>
+        
+        <style>
+        body{
+margin: 0;
+padding: 0;
+        }
+
+.div1{
+width: 700px;
+margin: auto;
+background-color: beige;
+text-align: center
+}
+h1{
+    padding-top: 60px
+}
+.li_div{
+    width: 80%;
+    /* background-color: aqua; */
+    margin: auto;
+    text-align: left;
+    height: 50px;
+    line-height: 50px;
+    border:1px solid #cccc;
+}
+.div3{
+    width: 80%;
+    /* background-color: aqua; */
+    margin: auto;
+    text-align: left;
+    margin-top: 80px
+}
+.li_div_1{
+    float: right;
+    color: #cccc;
+    margin-right: 6px
+}
+
+        
+        </style>
+
+   <body>
+      <div class="div1">
+    <h1>React Todo</h1>
+    <div class="div2" id="parent_div">
+        <!-- <div class="li_div" "><input type="checkbox" id="check_1" name="1"  onclick="checkBox(this.id)"><span>吃饭</span><div class="li_div_1"  onclick="dddd()" style="display:none" >删除</div></div>
+        <div class="li_div"><input type="checkbox" name="2"><span>吃饭</span><div class="li_div_1"  >删除</div></div>
+        <div class="li_div"><input type="checkbox"  name="3"><span>吃饭</span><div class="li_div_1"  >删除</div></div> -->
+
+    </div>
+    <div class="li_div"><span id="over">0</span>&nbsp;已完成/<span id="count">0</span>&nbsp;总数</div>
+
+
+        <div class="div3">
+            <span>Task</span>
+            <div style="width:100%"><input id="task_value" type="text" style=" border-radius: 9px; width:100%;height: 30px"  placeholder="你想做点什么"></div>
+        </div>
+
+
+
+     <div style="margin:auto;padding-top: 40px ;padding-bottom: 40px; text-align: right;width: 80%"><button style="height:30px;width:100px;color:white;background-color: blue;" onclick="addNode()">Save Task</button>
+
+     </div> 
+
+        </div>
+
+
+      </div>
+    </body>
+    
+
+
+
+<script type="text/javascript">
+
+window.onload=function()//用window的onload事件，窗体加载完毕的时候
+{
+    document.getElementById("count").innerText=document.getElementById("parent_div").childElementCount;
+}
+
+
+
+// function show(this){
+// this.children
+
+// }
+
+var i=1;
+function addNode(){
+    var c_id="check"+i
+var text=document.getElementById("task_value").value;
+var div='<div class="li_div" onmouseover="show(this)" onmouseout="hide(this)"><input type="checkbox" id="'+c_id+'" name="task" onclick="checkBox(this.id)"><span>'+text+'</span><div class="li_div_1"  onclick="deleteNode(this)" style="display:none;cursor:pointer" >删除</div></div>';
+var parent_inner=document.getElementById("parent_div");
+parent_inner.innerHTML+=div;
+document.getElementById("count").innerText=document.getElementById("parent_div").childElementCount
+i++;
+}
+
+
+function checkBox(id_v){
+//   var che=document.getElementsByName(id_v)[0];
+  var che=document.getElementById(id_v);
+    if(che.checked){
+      che.nextElementSibling.setAttribute('style', 'text-decoration: line-through !important');
+      getTaskOver();
+     
+    }else{
+        che.nextElementSibling.setAttribute('style', 'text-decoration: none !important');
+        getTaskOver();
+    }
+    }
+
+
+
+function getTaskOver(){
+    var a=0;
+   
+    var checkbox_all=document.getElementsByName("task");
+    
+     for(var s=0;s<checkbox_all.length;s++){
+        if(checkbox_all[s].checked){
+         a++;
+      }
+     }
+     document.getElementById("over").innerText=a;
+}
+
+
+function show(s){
+s.lastElementChild.style.display="block";
+
+}
+function hide(s){
+    s.lastElementChild.style.display="none";
+
+}
+function deleteNode(children){
+    var parent_node=document.getElementById("parent_div");
+
+    parent_node.removeChild(children.parentNode);
+    document.getElementById("count").innerText=document.getElementById("parent_div").childElementCount;
+    getTaskOver();
+
+}
+
+
+
+
+</script>
+
+
+
+</html>
