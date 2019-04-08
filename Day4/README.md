@@ -4,8 +4,9 @@
 2. 扩展运算符
 3. 箭头函数
 4. promise
-5. import export（选学） 
-6. async await（选学） 
+5. 解构赋值  
+6. import export（选学）  
+7. async await（选学） 
 
 ### 要求
 使用es6写法改写Day3练习
