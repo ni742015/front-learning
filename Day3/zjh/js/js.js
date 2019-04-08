@@ -2,44 +2,50 @@ function changeDom(list,change,changeValue) {
     if (change && change===true ) {
         var node = document.getElementById('task')
         if (node.value.trim()) {
-            list.push(node.value)
+            list.push({name:node.value,check:false})
             node.value = ''
-        }   
+        }
         else{
             alert('请输入有效值');
             return;
         }
     }
     else if(change===false){
-        let i = list.indexOf(changeValue);
-        list.splice(i,1)
+        list.splice(changeValue,1)
     }
     checkedNumSum(list)
     var todolist = document.getElementById('todolist')
     todolist.innerHTML = ''
     for (let i = 0; i < list.length; i++) {
-        todolist.appendChild(creatDom(list[i],i))
+        todolist.appendChild(creatDom(list[i].name,i,list[i].check))
     }
 }
-function checkedNumSum(list,num) {
-    if (!num) {
-         num = 0
-    }
+function checkedNumSum(list) {
+    let num = 0
+    list.map(item =>{
+        if (item.check) {
+            num++
+        }
+    })
     var listLength =  document.getElementById('listLength')
-    listLength.innerHTML = ''+checkedNum+'已完成 / '+list.length+'总数'
+    listLength.innerHTML = ''+num+'已完成 / '+list.length+'总数'
 }
-function creatDom(value,i) {
+function creatDom(value,i,check) {
     var div = document.createElement('div')
-    div.classList.add('list')
     var div1 = document.createElement('div')
-    div1.classList.add('conent')
     var input = document.createElement('input')
-    input.setAttribute('type','checkbox')
-    input.setAttribute('name','todo')
-    input.setAttribute('value',i)
     var txt=document.createTextNode(value); //创建文本节点
     var div2 = document.createElement('div')
     var txt2=document.createTextNode('删除'); //创建文本节点
+    div1.classList.add('conent')
+    if (check) {
+        div.classList.add('checked')
+    }
+    div.classList.add('list')    
+    input.setAttribute('type','checkbox')
+    input.setAttribute('name','todo')
+    input.setAttribute('value',i)
+    input.checked=check
     div2.classList.add('delete')
     div2.appendChild(txt2)
     div.appendChild(div1)
@@ -48,18 +54,17 @@ function creatDom(value,i) {
     div1.appendChild(txt)
     input.addEventListener('click',function(e){
         if(e.target.checked){
-            checkedNum++
             this.parentElement.parentElement.classList.add('checked')
         }
         else{
-            checkedNum--
             this.parentElement.parentElement.classList.remove('checked')
         }
-        checkedNumSum(todoList,checkedNum)
+        todoList[i].check = e.target.checked
+        checkedNumSum(todoList)
     })
     div2.addEventListener('click',function(e){
-        let change = e.srcElement.parentElement.children[0].innerText
-        changeDom(todoList,false,change)
+        checkedNumSum(todoList)
+        changeDom(todoList,false,this.previousSibling.childNodes[0].value)
     })
     return div;
 }
@@ -68,8 +73,7 @@ function domInsert() {
     changeDom(todoList,true)
 }
 
-let todoList = ['吃饭','睡觉','打豆豆']
-let checkedNum = 0
+let todoList = [{name:'吃饭',check:false},{name:'睡觉',check:false},{name:'打豆豆',check:false}]
 window.onload = function () {
     changeDom(todoList)
 }
