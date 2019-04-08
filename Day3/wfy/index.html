@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todolist</title>
+</head>
+
+<body>
+    <div>
+        <ul>
+    </div>
+    <input type="text">
+    
+    <script>
+        var oInput = document.getElementsByTagName("input")[0];
+        oInput.onkeydown = function (event) {
+            var event = event || window.event;  //为了实现多种浏览器兼容
+            if (event.keyCode == 13) {  //13表示enter按键的keyCode编码
+                var data = this.value;
+                addData(data);
+                clearData();
+            }
+        }
+
+        // 添加数据
+        function addData(data) {
+            var tempLi = document.createElement("li");
+            var tempBtn = document.createElement("button");
+            var tempSpan = document.createElement("span");
+            var oUl = document.getElementsByTagName("ul")[0];
+            tempBtn.innerHTML = "delete";
+            tempBtn.name = "delete";
+            tempSpan.innerHTML = data;
+            tempLi.appendChild(tempSpan);
+            tempLi.appendChild(tempBtn);
+            oUl.appendChild(tempLi);
+        }
+
+        // 清空数据
+        function clearData() {
+            var oInput = document.getElementsByTagName("input")[0];
+            oInput.value = "";
+        }
+
+        // 点击删除
+        var oUl = document.getElementsByTagName("ul")[0];
+        oUl.onclick = function (event) {
+            var event = event || window.event;
+            var target = event.target;
+            if (target.name == "delete") {
+                target.parentNode.parentNode.removeChild(target.parentNode);
+            }
+        }
+    </script>
+</body>
+
+</html>
