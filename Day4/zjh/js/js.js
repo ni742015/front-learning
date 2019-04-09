@@ -32,28 +32,33 @@ let checkedNumSum = (list) => {
     listLength.innerHTML = ''+num+'已完成 / '+list.length+'总数'
 }
 
+const creatElement = (element) => { return document.createElement(element) }
+
 let creatDom=(value,i,check) => {
-    let div = document.createElement('div')
-    let div1 = document.createElement('div')
-    let input = document.createElement('input')
+    //元素创建
+    let div = creatElement('div')
+    let div1 = creatElement('div')
+    let input = creatElement('input')
+    let div2 = creatElement('div')
     let txt=document.createTextNode(value); //创建文本节点
-    let div2 = document.createElement('div')
-    let txt2=document.createTextNode('删除'); //创建文本节点
+    //样式添加
     div1.classList.add('conent')
     if (check) {
         div.classList.add('checked')
     }
     div.classList.add('list')
+    //属性设置
     input.setAttribute('type','checkbox')
     input.setAttribute('name','todo')
     input.setAttribute('value',i)
     div2.classList.add('delete')
-    input.checked=check    
-    div2.appendChild(txt2)
+    div2.innerHTML='删除'        
+    input.checked=check
     div.appendChild(div1)
     div.appendChild(div2)
     div1.appendChild(input)
     div1.appendChild(txt)
+    //事件绑定
     input.addEventListener('click',function(e){
         if(e.target.checked) this.parentElement.parentElement.classList.add('checked')
         else{this.parentElement.parentElement.classList.remove('checked')}
@@ -70,7 +75,7 @@ let domInsert = () => {
     changeDom(todoList,1)
 }
 
-let todoList = [{name:'吃饭',check:false},{name:'睡觉',check:false},{name:'打豆豆',check:false}]
+const todoList = [{name:'吃饭',check:false},{name:'睡觉',check:false},{name:'打豆豆',check:false}]
 window.onload = function () {
     changeDom(todoList)
 }
