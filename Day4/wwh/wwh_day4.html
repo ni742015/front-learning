@@ -14,7 +14,7 @@
         .div1 {
             width: 700px;
             margin: auto;
-            background-color: beige;
+            background-color: #f5f5f5;
             text-align: center
         }
 
@@ -52,9 +52,6 @@
     <div class="div1">
         <h1>React Todo</h1>
         <div class="div2" id="parent_div">
-            <!-- <div class="li_div" "><input type="checkbox" id="check_1" name="1"  onclick="checkBox(this.id)"><span>吃饭</span><div class="li_div_1"  onclick="dddd()" style="display:none" >删除</div></div>
-        <div class="li_div"><input type="checkbox" name="2"><span>吃饭</span><div class="li_div_1"  >删除</div></div>
-        <div class="li_div"><input type="checkbox"  name="3"><span>吃饭</span><div class="li_div_1"  >删除</div></div> -->
 
         </div>
         <div class="li_div"><span id="over">0</span>&nbsp;已完成/<span id="count">0</span>&nbsp;总数</div>
@@ -86,41 +83,41 @@
     {
         document.getElementById("count").innerText = document.getElementById("parent_div").childElementCount;
     }
-
-    var i = 1;
-    function addNode() {
-
-        var c_id = "check" + i;
-        var text = document.getElementById("task_value").value;
-        var div = '<div class="li_div" onmouseover="show(this)" onmouseout="hide(this)"><input type="checkbox" id="' + c_id + '" name="task" onclick="checkBox(this.id)"><span>' + text + '</span><div class="li_div_1"  onclick="deleteNode(this)" style="display:none;cursor:pointer" >删除</div></div>';
-        var parent_inner = document.getElementById("parent_div");
+    let i = 1;
+    //添加节点
+    const addNode = () => {
+        let c_id = "check" + i
+        let text = document.getElementById("task_value").value;
+        let div = '<div class="li_div" onmouseover="show(this)" onmouseout="hide(this)"><input type="checkbox" id="' + c_id + '" name="task" onclick="checkBox(this.id)"><span>' + text + '</span><div class="li_div_1"  onclick="deleteNode(this)" style="display:none;cursor:pointer" >删除</div></div>';
+        let parent_inner = document.getElementById("parent_div");
         parent_inner.innerHTML += div;
         document.getElementById("count").innerText = document.getElementById("parent_div").childElementCount
         i++;
         document.getElementById("task_value").value = "";
+
     }
 
+    //修改选中节点样式
+    const checkBox = (...id_v) => {
 
-    function checkBox(id_v) {
-        //   var che=document.getElementsByName(id_v)[0];
         var che = document.getElementById(id_v);
         if (che.checked) {
-            che.nextElementSibling.setAttribute('style', 'text-decoration: line-through !important');
+            che.nextElementSibling.setAttribute('style', 'text-decoration: line-through ');
             che.setAttribute('checked', 'checked')
             getTaskOver();
         } else {
-            che.nextElementSibling.setAttribute('style', 'text-decoration: none !important');
+            che.nextElementSibling.setAttribute('style', 'text-decoration: none ');
             che.removeAttribute('checked');
             getTaskOver();
         }
     }
 
 
-
-    function getTaskOver() {
-        var a = 0;
-        var checkbox_all = document.getElementsByName("task");
-        for (var s = 0; s < checkbox_all.length; s++) {
+    //修改完成数量
+    const getTaskOver = () => {
+        let a = 0;
+        let checkbox_all = document.getElementsByName("task");
+        for (let s = 0; s < checkbox_all.length; s++) {
             if (checkbox_all[s].checked) {
                 a++;
             }
@@ -128,21 +125,26 @@
         document.getElementById("over").innerText = a;
     }
 
-
-    function show(s) {
+    //删除按钮显示
+    const show = (s) => {
         s.lastElementChild.style.display = "block";
+        s.style.background = "#dff0d8"
 
     }
-    function hide(s) {
+
+    //删除按钮消失
+    const hide = (s) => {
         s.lastElementChild.style.display = "none";
+        s.style.background = "none"
 
     }
-    function deleteNode(children) {
-        var parent_node = document.getElementById("parent_div");
+
+    //删除指定节点
+    const deleteNode = (children) => {
+        let parent_node = document.getElementById("parent_div");
         parent_node.removeChild(children.parentNode);
         document.getElementById("count").innerText = document.getElementById("parent_div").childElementCount;
         getTaskOver();
-
     }
 
 
