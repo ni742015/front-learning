@@ -1,30 +1,32 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title></title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>todolist</title>
+    <link rel="stylesheet" href="./todolist.css">
 </head>
 
 <body>
     <div class="main">
-        <p>React &nbsp Todo</p>
+        <p>todolist</p>
         <div id="todolist" class="todolist">
         </div>
         <div id="listLength" class="listLength">
         </div>
-        <hr />
+        <br>
         <div class="taskInput">
             <div style="width: 20%;text-align: center;">Task</div>
             <div class="input">
-                <input placeholder="你想做点什么" id="task" />
+                <input placeholder="你想做点什么" id="task" onkeydown="f_Input_onkeydown()"/>
             </div>
         </div>
         <div class="Submit">
-            <button onclick="domInsert()">Save &nbsp Task</button>
+            <button onclick="f_Input_onclick()">Save &nbsp Task</button>
             <div style="clear:both;"></div>
         </div>
     </div>
-    <script src="./js/js.js"></script>
+    <script text='text/javascript' src="./todolist.js"></script>
 </body>
 
 </html>

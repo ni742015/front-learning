@@ -37,15 +37,11 @@
 .delete{
     color: transparent;
     position: absolute;
-    right: 20;
+    right: 20px;
     cursor: pointer;
 }
 .list:hover .delete{
     color: rgb(138, 138, 138);
-}
-hr{
-    margin: 20px;
-    background: rgb(212, 212, 212);
 }
 .taskInput{
     display: flex;
@@ -57,14 +53,12 @@ hr{
     width: 75%;
     border-radius: 5px;
     border: 1px solid rgb(194, 194, 194);
-}
+}  
 .input input{
     margin: 0px auto;
     outline:medium;
     border: none;
     margin-left: 5%;
-    /* padding: 10px; */
-    /* color:rgb(194, 194, 194); */
     width: 90%;
     min-height: 40px;
 }
@@ -82,18 +76,13 @@ button{
     background-color: #337ab7;
 }
 button:hover{
-    background-color:  #286090;
+    background-color:  #20cfdb;
 }
 button:active{
-    background-color: blue;
+    background-color: #20cfdb;
 }
-
-
 .checked{
     background-color: #dff0d8;
     color:#3c763d;
     text-decoration: line-through;
 }
-
-
-
