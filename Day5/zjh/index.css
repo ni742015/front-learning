@@ -1,0 +1,161 @@
+.container-fluid{
+    padding: 0;
+}
+.row{
+    /* border: 1px solid black; */
+    /* background: rgb(255, 192, 192); */
+}
+.maintitle{
+    width: 100%;
+    height: 100%;
+    padding: 10%;
+    background: url("./image/day1_01.png") center top ;
+    background-size:contain;
+    background-size:10%;/* 0％~100％之间的任何值，将背景图片宽高按百分比显示，当设置一个值的时候同也将其作为图片宽度来等比缩放 */
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+.mainCenter{
+    width: 50%;
+}
+.centerDiv{
+    position: relative;
+    /* top: 50%; */
+    transform: translateX(50%);
+}
+.inputDiv{
+    background: transparent;
+}
+.centerp{
+    color: white;
+    font-size: 40px;
+    text-align: center;
+}
+.mainConent{
+    font-size: 16px;
+    color: white;
+    margin: 40px auto; 
+    margin-bottom: 60px; 
+}
+.formSub{
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 40px;
+}
+.formp{
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+.formTitle{
+    color:gray;
+    margin: 40px 0;
+}
+.blackP{
+    color: black;
+    margin: 40px auto; 
+    font-size: 22px;
+}
+.imgTitle{
+    color: black;
+    margin: 40px auto; 
+    font-size: 22px;
+}
+.imgConent{
+    padding: 40px;
+}
+.imgSubTitle{
+    font-weight: 600;
+    font-size: 16px;
+}
+.bottitle{
+    width: 100%;
+    height: 100%;
+    padding: 10% 0;
+    background: url("./image/day1_02.png") center top ;
+    background-size:contain;
+    background-size:10%;/* 0％~100％之间的任何值，将背景图片宽高按百分比显示，当设置一个值的时候同也将其作为图片宽度来等比缩放 */
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+.bottitle .col-lg-4{
+    padding: 0;
+}
+.bottitle .col-lg-4:last-child{
+    padding: 20px 0 20px 40px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+    border-radius: 10px 0 0 10px;
+}
+.bottitle .col-lg-4 img{
+    width: 100%;
+}
+/* .bottitle .col-lg-8{
+} */
+.bottitle .col-lg-8 .whiteTile{
+    color:white;
+    font-size: 40px;
+    padding: 0 30%;
+    font-weight: 400;
+}
+.bottitle .col-lg-8 .whiteP{
+    margin: 10% 0;
+    padding: 0 30%;    
+    font-size: 22px;
+    color:white;
+    opacity: 0.6;
+}
+.whiteButton{
+    padding: 0;
+    padding-left: 30%;    
+}
+.whiteButton button{
+    padding: 10px 30px;
+}
+.whiteButton button:last-child{
+    color:white;
+    margin-left: 10%;
+    background: transparent !important;
+}
+.fontRow{
+    padding: 60px 0;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+.fontConent{
+    width: 60%;
+    padding: 40px;
+    margin: 40px auto;
+}
+.fontTitle{
+    color: black;
+    margin: 60px auto; 
+    font-size: 40px;
+}
+.fontConent .row .col-lg-4 {
+    padding: 20px 0;
+}
+.fontConent .row .col-lg-6 img{
+    width: 100%;
+}
+.birdContent{
+    width: 50%;
+    padding: 40px;
+    margin: 40px auto;
+}
+.nextForm{
+    width: 50%;
+    border: 1px solid black;
+    height: 500px;
+    margin: 0 auto;
+    /* padding:  */
+}
+.nextForm .col-lg-6:first-child{
+    border: 1px solid red;
+}
+.nextForm .col-lg-6:last-child{
+    border: 1px solid green;
+}
+
+
+/* <img src="./image/day1_01.png" class="img-responsive" alt="Responsive image" /> */
