@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue生命周期学习</title>
+ 
+  
+</head>
+<style>
+.content{
+  width: 700px;
+  height: 500px;
+  border: 1px solid #ccc;
+  overflow-y: auto;
+  
+}
+.content_1{
+  width: 100%;
+  height: 200px;
+  border: 1px solid #ccc
+}
+</style>
+<body>
+ <div class="content" id="content">
+<div class="content_1" v-for="o in object">
+{{o.name}}<br/>
+{{o.texin}}<br/>
+{{o.sale}}<br/>
+{{o.pingjia}}<br/>
+{{o.jiage}}<br/>
+<br/><br/>
+<button   v-bind:disabled="o.count===0" v-on:click="o.count-=1">减去</button>
+<span >{{o.count}}</span>
+<button v-on:click="o.count+=1">添加</button>
+</div>
+
+
+总价格为:{{totalPrice}}
+
+ </div>
+  </body>
+  <script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+  <script>
+  new Vue({
+    el:"#content",
+    data:{
+      object:[
+        {name:"皮蛋瘦肉粥",
+          texin:"咸粥",
+          sale:"月售110份",
+          pingjia:"好评率",
+          jiage:10,
+          count:0
+        },
+        {name:"皮蛋瘦肉粥",
+          texin:"咸粥",
+          sale:"月售110份",
+          pingjia:"好评率",
+          jiage:14,
+          count:0
+        },
+        {name:"皮蛋瘦肉粥",
+          texin:"咸粥",
+          sale:"月售110份",
+          pingjia:"好评率",
+          jiage:16,
+          count:0
+        }, {name:"皮蛋瘦肉粥",
+          texin:"咸粥",
+          sale:"月售110份",
+          pingjia:"好评率",
+          jiage:18,
+          count:0
+        }
+        ]
+    },
+    computed:{
+      totalPrice:function(){
+
+        var totalP = 0;
+      for (var i = 0,len = this.object.length;i<len;i++) {
+        totalP+=this.object[i].jiage*this.object[i].count;
+      }
+      return totalP;
+      }
+
+    }
+
+
+
+
+
+  })
+
+
+
+
+
+  </script>
+
+</html>
