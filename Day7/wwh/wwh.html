@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue生命周期学习</title>
+
+
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .heard {
+        width: 100%;
+        height: 50px;
+        background-color: darkcyan;
+        line-height: 50px
+    }
+
+    .title {
+        padding-left: 10px;
+        color: white;
+        font-size: 30px
+    }
+
+    .content {
+        width: 100%
+    }
+
+    .content_title {
+        color: #cccccc;
+        font-size: 20px;
+        padding-top: 30px;
+        width: 90%;
+        margin: auto
+    }
+
+    .content_content {
+        width: 90%;
+        margin: auto;
+        border: 1px solid #ccc;
+        height: 400px;
+        margin-top: 50px
+    }
+
+    .content_children {
+        width: 90%;
+        margin: auto
+    }
+
+    .children_1 {
+        width: 80px;
+        height: 20px;
+        background-color: #cccccc;
+        color: white;
+        text-align: center;
+        line-height: 20px;
+        border-radius: 5px;
+        margin-top: 20px
+    }
+
+    .children_2 {
+        font-size: 40px;
+        margin-top: 20px
+    }
+
+    .children_3 {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        border: 1px solid #ccc;
+        margin-top: 50px;
+        font-size: 30px;
+        cursor: pointer;
+        text-indent: 10px
+    }
+
+    .faile_c {
+        margin-top: 10px
+    }
+
+    .text_left {
+        padding-left: 10px
+    }
+
+    .children_4 {
+        margin-top: 30px
+    }
+
+    .children_4_1 {
+        width: 30%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        float: left;
+
+    }
+
+    .margin_left {
+        margin-left: 10px
+    }
+
+    .back_color {
+        background-color: darkcyan;
+    }
+</style>
+
+<body>
+
+    <div class="heard">
+        <span class="title">测试</span>
+    </div>
+
+    <div class="content">
+        <div class="content_title">
+            <span>开始时间:&nbsp;&nbsp;</span><span>07:52</span><span>&nbsp;&nbsp;用时:&nbsp;&nbsp;</span><span>181分钟</span>
+        </div>
+
+        <div class="content_content" id="content_content">
+            <Subject v-bind:post="post"></Subject>
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+    //定义提交组件
+
+    var Submit = {
+        props: ['obj'],
+        template: `<div class="children_4_1 margin_left" v-on:click.once="submit(obj)">交卷</div>`,
+        methods: {
+            submit: function (obj) {
+               if(Boolean(obj.answer)==Boolean(obj.user_select)){
+                   obj.count+=obj.score;
+                   alert("您的总得分"+obj.count);
+               }else{
+                obj.count-=obj.score>0?obj.count:0;
+                alert("您的总得分"+obj.count);
+               }
+            }
+        }
+
+    }
+
+    //定义试题组件
+    Vue.component('Subject', {
+        components: {
+            'children': Submit
+        },
+        props: ['post'],
+        data: function () {
+            return { count: 0, class_success: false, class_fail: false,user_select:false}
+        },
+
+        template: `<div class="content_children"> 
+        <div class="children_1">{{post.title}}</div>
+          <div class="children_2">{{post.problem}}</div>
+          <div class="children_3" v-bind:class="{ back_color: class_success }" v-on:click="Select(1)">正确</div>
+          <div class="children_3 faile_c" v-bind:class="{ back_color: class_fail}" v-on:click="Select(2)">错误</div>
+      
+        <div class="children_4">
+        <div class="children_4_1">上一题</div>
+        <div class="children_4_1 margin_left back_color">下一题</div>
+        <children v-bind:obj="{answer:post.answer,count:this.count,user_select:this.user_select,score:post.score}"></children>
+        </div>
+
+        </div>`,
+        methods: {
+            Select: function (messge) {
+                if (messge == 1) {
+                    this.class_success = true;
+                    this.class_fail = false;
+                    this.user_select=true;
+
+                } else {
+                    this.class_success = false;
+                    this.class_fail = true;
+                    this.user_select=false;
+                }
+            }
+
+
+
+        }
+
+
+
+
+
+    });
+
+
+
+
+    new Vue({
+        el: '#content_content',
+        data: {
+            post:
+            {
+                title: "判断题",
+                problem: "所有苹果都是水果？",
+                score: 5,
+                answer: true,
+                isTrue: false,
+            }
+
+
+
+        }
+
+    })
+
+
+</script>
+
+</html>
