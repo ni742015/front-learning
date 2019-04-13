@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <title>vue巩固练习</title>
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+        <div id="app">
+            <p class="title">测试</p>
+            <p class="recording-time">开始时间: {{now}} &nbsp;  &nbsp; 用时: {{time}}分钟
+            </p>
+            <div class="form-Conent">
+                <div><span class="question-type" >{{dataList[index].questionType}}</span></div>
+                <div class="question-title">{{dataList[index].questionTitle}}</div>
+                <div :class="item.check?'true-answer' :'answer'" 
+                        v-for="(item,i) in dataList[index].questionAnswer" 
+                        :key="item._id"
+                        @click="checkOne(i)"
+                        >
+                    {{item.name}}
+                </div>
+                <div class="buttons">
+                        <button class="before-button" @click="before" v-if="index!==0">上一步</button>
+                        <button class="next-button" @click="next"  v-if="(index+1)!==dataList.length">下一步</button>
+                        <button class="submit-button" @click="submit" v-if="(index+1)===dataList.length">交卷</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                index:0,
+                now:'07:51',
+                time:'181',
+                answers:[],
+                dataList:[
+                    {
+                        questionType:'判断题',
+                        questionTitle:'所有的苹果都是水果？',
+                        questionAnswer:[
+                            {name:'正确',_id:1,check:false},
+                            {name:'错误',_id:2,check:false}
+                        ]
+                    },
+                    {
+                        questionType:'判断题',
+                        questionTitle:'王文豪是男的？',
+                        questionAnswer:[
+                            {name:'正确',_id:1,check:false},
+                            {name:'错误',_id:2,check:false}
+                        ]
+                    },
+                    {
+                        questionType:'判断题',
+                        questionTitle:'王凤颖是妹子？',
+                        questionAnswer:[
+                            {name:'正确',_id:1,check:false},
+                            {name:'错误',_id:2,check:false}
+                        ]
+                    }
+                ],
+            },
+            methods :{
+                before(){
+                    this.index--
+                },
+                next(){
+                    let i = this.index
+                    for (let j = 0; j < this.dataList[this.index].questionAnswer.length; j++) {
+                        if (this.dataList[this.index].questionAnswer[j].check) {
+                            this.answers.push({id:this.index,answer:this.dataList[this.index].questionAnswer[j].name})
+                            this.index++
+                            break;
+                        }
+                    } 
+                    if (i===this.index) {
+                        alert('请选择')
+                    }
+                },
+                submit(){
+                    let i = this.index
+                    for (let j = 0; j < this.dataList[this.index].questionAnswer.length; j++) {
+                        if (this.dataList[this.index].questionAnswer[j].check) {
+                            this.answers.push({id:this.index,answer:this.dataList[this.index].questionAnswer[j].name})
+                            let answers = this.answers.map(item =>  item.answer+"")
+                           alert('您选择的答案是'+answers)
+                           break;
+                        }
+                    } 
+                },
+                checkOne(i){
+                    for (let j = 0; j < this.dataList[this.index].questionAnswer.length; j++) {
+                        this.dataList[this.index].questionAnswer[j].check=false
+                    }
+                    this.dataList[this.index].questionAnswer[i].check = true                    
+                }
+            }
+        })
+    </script>
+</html>
