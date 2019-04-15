@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.title{
+    height: 5%;
+    background: darkcyan;
+    color: white;
+    font-size: 4rem;
+    padding: 40px 40px;
+}
+.recording-time{
+    font-size: 3rem;
+    padding: 40px;
+    color:#cccccc;
+}
+.card{
+    border: 1px solid gray;
+    width: 85%;
+    margin: 0px auto;
+    min-height: 20%;
+    background: white;
+    padding: 60px;
+}
+.card-title{
+    font-size: 3rem;
+}
+.current-question{
+    margin: 1rem;
+    float: left;
+    width: 10rem;
+    height: 10rem;
+    border-radius:100px;
+    border: 2px solid black;
+    font-size: 3rem;
+    color: black;
+    text-align:center;
+    line-height: 10rem;
+    box-shadow: 10px 10px 5px #888888;
+}
+.others-question{
+    margin: 1rem;
+    float: left;
+    width: 10rem;
+    height: 10rem;
+    border-radius:100px;
+    border: 1px solid gray;
+    font-size: 3rem;
+    color: black;
+    text-align:center;
+    line-height: 10rem;
+    box-shadow: 10px 10px 5px #888888;
+}
+.form-Conent{
+    border: 1px solid gray;
+    width: 85%;
+    margin: 0px auto;
+    min-height: 20%;
+    background: white;
+    padding: 60px;
+}
+.question-type{
+    font-size: 3rem;
+    color: white;
+    background: #cccccc;
+    display: inline-flex;
+    padding: 20px;
+    border-radius: 15px;
+}
+.question-title{
+    font-size: 5.5rem;
+    margin: 40px 0;
+}
+.true-answer{
+    border: 1px solid gray;
+    padding: 40px;
+    font-size: 3rem;
+    margin: 40px 0;
+    color: white;
+    background: darkcyan;
+}
+.answer{
+    margin: 40px 0;
+    border: 1px solid gray;
+    padding: 40px;
+    font-size: 3rem;
+}
+
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.before-button{
+    margin: 40px;
+    width: 28%;
+    height: 6rem;
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+.next-button{
+    margin: 40px;
+    width: 28%;
+    height: 6rem;
+    font-size: 3rem;
+    background-color: darkcyan;
+    border: 1px solid gray;
+    border-radius: 10px;
+    color: white;
+}
+
+.submit-button{
+    margin: 40px;  
+    width: 28%;
+    height: 6rem;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+    font-size: 3rem;
+}

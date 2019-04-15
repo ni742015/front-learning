@@ -1,0 +1,155 @@
+<html>
+
+<head>
+    <title>vue</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div id="app">
+        <p class="title">测试</p>
+        <p class="recording-time">开始时间: {{now}} &nbsp; &nbsp; 用时: {{time}}分钟</p>
+        <div class="card">
+            <p class="card-title">答题卡</p>
+            <div :class="index==i?'current-question':'others-question'" v-for="(question, i) in dataList"
+                :key="question._id" @click="switchQuestion(i)">
+                {{i + 1}}
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="form-Conent">
+            <span class="question-type">{{map.get(dataList[index].type)}}</span>
+            <div class="question-title">{{dataList[index].content}}</div>
+            <!-- 变化部分：选项 -->
+            <!-- 连线题 -->
+            <!-- 判断题 -->
+            <div v-if="dataList[index].type==='judgment'">
+                <div :class="dataList[index].userAnswer?'true-answer':'answer'" @click="judgmentSelect(true)">正确</div>
+                <div :class="dataList[index].userAnswer?'answer':'true-answer'" @click="judgmentSelect(false)">错误</div>
+            </div>
+            <!-- 填空题 -->
+            <div v-if="dataList[index].type==='fill'">
+                <!-- <input :class="true-answer" v-for="(item,i) in dataList[index].answer" :key="item._id" v-model="item"></input> -->
+            </div>
+            <!-- 计算题 -->
+            <div v-if="dataList[index].type==='aq'">
+                <!-- <input :class="item.check?'true-answer' :'answer'" v-for="(item,i) in dataList[index].questionAnswer"
+                    :key="item._id" @click="checkOne(i)" v-if="dataList[index].questionType==='填空题'" v-model="item">
+                </input> -->
+            </div>
+            <!-- 多选题 -->
+            <div v-if="dataList[index].type==='multiple'">
+                <!-- <div :class="item.check?'true-answer' :'answer'" v-for="(item,i) in dataList[index].questionAnswer"
+                    :key="item._id" @click="checkOne(i)" v-if="dataList[index].questionType==='判断题'">
+                    {{item.name}}
+                </div> -->
+            </div>
+            <!-- 单选题 -->
+            <div v-if="dataList[index].type==='single'">
+                <div :class="dataList[index].userAnswer===i?'true-answer' :'answer'" v-for="(item,i) in dataList[index].options"
+                    :key="item._id" @click="singleSelect(i)">
+                    {{item}}
+                </div>
+            </div>
+            <!-- 结束 变化部分：选项 -->
+            <div class="buttons">
+                <button class="before-button" @click="before" v-if="index!==0">上一题</button>
+                <button class="next-button" @click="next" v-if="(index+1)!==dataList.length">下一题</button>
+                <button class="submit-button" @click="submit">交卷</button>
+            </div>
+        </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            map: new Map()
+                .set('join', '连线题')
+                .set('judgment', '判断题')
+                .set('fill', '填空')
+                .set('aq', '计算题')
+                .set('multiple', '多选题')
+                .set('single', '单选题'),
+            index: 0,
+            now: '07:51',
+            time: '181',
+            answers: [],
+            dataList: [
+                {
+                    id: '1',
+                    type: 'join',
+                    content: '四大名著连一连',
+                    leftItems: ['《水浒传》', '《西游记》', '《三国演义》', '《红楼梦》'],
+                    rightItems: ['罗贯中', '施耐庵', '曹雪芹', '吴承恩'],
+                    answer: [[0, 1], [1, 3], [2, 0], [4, 2]],
+                    userAnswer: null
+                },
+                {
+                    id: '2',
+                    type: 'judgment',
+                    content: '所有的苹果都是水果',
+                    answer: true,
+                    userAnswer: null
+                },
+                {
+                    id: '3',
+                    type: 'judgment',
+                    content: '所有的水果都是苹果',
+                    answer: false,
+                    userAnswer: null
+                },
+                {
+                    id: '4',
+                    type: 'fill',
+                    content: '___秋月何时了，往事___',
+                    answer: ['春花', '知多少'],
+                    userAnswer: null
+                },
+                {
+                    id: '5',
+                    type: 'aq',
+                    content: '1+2等于几？',
+                    answer: '3',
+                    userAnswer: null
+                },
+                {
+                    id: '6',
+                    type: 'multiple',
+                    content: '哪些是对的',
+                    options: ['1+1=2', '1+2=3', '1+1=3', '1+2=2'],
+                    answer: [0, 1],
+                    userAnswer: null
+                },
+                {
+                    id: '7',
+                    type: 'single',
+                    content: '1+1=?',
+                    options: ['1', '2', '3', '4'],
+                    answer: 1,
+                    userAnswer: null
+                }
+            ],
+        },
+        methods: {
+            before() {
+                this.index--
+            },
+            next() {
+                this.index++
+            },
+            submit() {
+                for (let j = 0; j < this.dataList[this.index].length; j++)
+                    this.answers.push({ id: this.index, userAnswer: this.dataList[this.index].userAnswer })
+            },
+            switchQuestion(i) {
+                this.index = i
+            },
+            judgmentSelect(target) {
+                this.dataList[this.index].userAnswer = target
+            }
+        }
+    })
+</script>
+
+</html>
