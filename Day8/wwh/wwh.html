@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue生命周期学习</title>
+
+
+</head>
+<link rel="stylesheet" href="./style.css">
+
+<body>
+
+    <div class="heard">
+        <span class="title">测试</span>
+    </div>
+
+    <div class="content" id="content">
+        <div class="content_title">
+            <span>开始时间:&nbsp;&nbsp;</span><span>{{beginTime}}</span><span>&nbsp;&nbsp;用时:&nbsp;&nbsp;</span><span>{{time}}</span>
+        </div>
+
+        <div class="answer_Card">
+            <div class="answer_Card_content">
+                <div class="answer_Card_title">答题卡</div>
+                <div class="answer_Card_numbers" id="answer_Card_numbers">
+                    <div class="answer_Card_number" v-for="(number,index) in forms.length"
+                        @click="changeProplem(index,$event)">
+                        {{number}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content_content" id="content_content">
+            <Subject v-bind:post="forms" :index="index"></Subject>
+        </div>
+
+        <div class="children_4">
+            <div class="children_4_1" @click="beforeProblem" v-if="index!==0">上一题</div>
+            <div class="children_4_1 margin_left back_color" @click="nextProblem" v-if="(index+1)!==forms.length">下一题</div>
+            <div class="children_4_1 margin_left" >交卷</div>
+        </div>
+
+    </div>
+
+
+</body>
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+    //定义提交组件
+
+    // var Submit = {
+    //     props: ['obj'],
+    //     template: `<div class="children_4_1 margin_left" v-on:click.once="submit(obj)">交卷</div>`,
+    //     methods: {
+    //         submit: function (obj) {
+    //             if (Boolean(obj.answer) == Boolean(obj.user_select)) {
+    //                 obj.count += obj.score;
+    //                 alert("您的总得分" + obj.count);
+    //             } else {
+    //                 obj.count -= obj.score > 0 ? obj.count : 0;
+    //                 alert("您的总得分" + obj.count);
+    //             }
+    //         }
+    //     }
+
+    // }
+
+    //定义试题组件
+    Vue.component('Subject', {
+        // components: {
+        //     'children': Submit
+        // },
+        props: ['post', 'index'],
+        data: function () {
+            return { fill_answer1: '',
+            fill_answer2: '',
+            aq_answer: '',}
+        },
+        template: `<div class="content_children"> 
+        <div class="children_1" >{{post[index].type}}</div>
+          <div class="children_2">{{post[index].content}}</div>
+          <ol class="Outer"   v-if="post[index].type === '判断题'">
+          <li class="children_3" @click="selectAnswer($event)" >正确</li>
+          <li class="children_3" @click="selectAnswer($event)" >错误</li>
+          </ol>
+
+          <ol class="Outer"   v-if="post[index].type === '多选题'">
+          <li class="children_3" v-for="i in post[index].options" @click="selectAnswer($event)" >{{i}}</li>
+          </ol>
+
+          <ol class="Outer"   v-if="post[index].type === '单选题'">
+          <li class="children_3" v-for="i in post[index].options" @click="selectAnswer($event)">{{i}}</li>
+          </ol>
+
+          <ol class="Outer"   v-if="post[index].type === '填空题'">
+          <li  class="children_3_fill" >1.<input type="text" class="text_class" v-model="fill_answer1"/></li>
+          <li   class="children_3_fill">2.<input type="text" class="text_class" v-model="fill_answer2"/></li>
+          </ol>
+
+          <ol class="Outer"   v-if="post[index].type === '计算题'">
+          <li  class="children_3_fill" >答案:<input type="text" class="text_class" v-model="aq_answer"/></li>
+          </ol>
+
+        </div>`,
+        methods: {
+            selectAnswer:function(event){
+                let p = event.target.parentNode.children; //获取父级的所有子节点
+                for (let i = 0; i < p.length; i++) {  //循环
+                    if (p[i].nodeType == 1 && p[i] != event) {  //如果该节点是元素节点与不是这个节点本身
+                        p[i].style.background = "white"  
+                        break;   //
+                    }
+                }
+                event.target.style.background = "darkcyan";
+            }
+
+        }
+    });
+
+    // <div class="Outer_3" v-if="{post[index].type=="判断题"">
+    //       <div class="children_3" v-for="(item,index) in post[index].answer ">
+    //         {{item}}
+    //         </div>
+    //       </div>
+
+
+    new Vue({
+        el: '#content',
+        data: {
+            time:0,
+            index: 0,
+            isShow: false,
+
+            forms: [
+                {
+                    id: '1',
+                    type: '判断题',
+                    content: '所有的苹果都是水果',
+                    answer: true,
+                    userAnswer: null
+                },
+                {
+                    id: '2',
+                    type: '填空题',
+                    content: '___秋月何时了，往事___',
+                    answer: ['春花', '知多少'],
+                    userAnswer: null
+                },
+                {
+                    id: '3',
+                    type: '计算题',
+                    content: '1+2等于几？',
+                    answer: '3',
+                    userAnswer: null
+                },
+                {
+                    id: '4',
+                    type: '多选题',
+                    content: '哪些是对的',
+                    options: ['A:1+1=2', 'B:1+2=3', 'C:1+1=3', 'D:1+2=2'],
+                    answer: [0, 1],
+                    userAnswer: null
+                },
+                {
+                    id: '5',
+                    type: '单选题',
+                    content: '1+1=?',
+                    options: ['A:1', 'B:2', 'C:3', 'D:4'],
+                    answer: 1,
+                    userAnswer: null
+                }
+            ]
+
+        },
+        methods: {
+            beforeProblem: function () {
+                this.index--;
+                let childrens = document.getElementById("answer_Card_numbers").children;
+                for (var i = 0; i < childrens.length; i++) {  //循环
+                    if (childrens[i].nodeType == 1 && i != this.index) {  //如果该节点是元素节点与不是这个节点本身
+                        childrens[i].style.background = "white";   // 
+                    }
+                }
+                childrens[this.index].style.background = "darkcyan";
+            },
+            nextProblem: function () {
+                this.index++;
+                let childrens = document.getElementById("answer_Card_numbers").children;
+                for (var i = 0; i < childrens.length; i++) {  //循环
+                    if (childrens[i].nodeType == 1 && i != this.index) {  //如果该节点是元素节点与不是这个节点本身
+                        childrens[i].style.background = "white";   // 
+                    }
+                }
+                childrens[this.index].style.background = "darkcyan";
+            },
+            changeProplem: function (number, event) {
+                var p = event.target.parentNode.children; //获取父级的所有子节点
+                for (var i = 0; i < p.length; i++) {  //循环
+                    if (p[i].nodeType == 1 && p[i] != event) {  //如果该节点是元素节点与不是这个节点本身
+                        p[i].style.background = "white"     //
+                    }
+                }
+                event.target.style.background = "darkcyan";
+                this.index = number;
+
+            },
+          
+
+
+
+
+
+        },
+        mounted: function () {
+            document.getElementById("answer_Card_numbers").children[0].style.background = "darkcyan";
+        },
+        computed: {
+            beginTime: function () {//开始时间
+                var now = new Date();
+                var year = now.getFullYear();       //年
+                var month = now.getMonth() + 1;     //月
+                var day = now.getDate();            //日
+                var hh = now.getHours();            //时
+                var mm = now.getMinutes();          //分
+                var ss = now.getSeconds();           //秒
+                var clock = year + "-";
+                if (month < 10)
+                    clock += "0";
+                clock += month + "-";
+                if (day < 10)
+                    clock += "0";
+                clock += day + " ";
+                if (hh < 10)
+                    clock += "0";
+                clock += hh + ":";
+                if (mm < 10) clock += '0';
+                clock += mm + ":";
+                if (ss < 10) clock += '0';
+                clock += ss;
+                return (clock);
+            }
+        }
+     
+
+    })
+
+
+</script>
+
+</html>
