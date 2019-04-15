@@ -14,24 +14,20 @@
         margin: 0;
         padding: 0;
     }
-
     .heard {
         width: 100%;
         height: 50px;
         background-color: darkcyan;
         line-height: 50px
     }
-
     .title {
         padding-left: 10px;
         color: white;
         font-size: 30px
     }
-
     .content {
         width: 100%
     }
-
     .content_title {
         color: #cccccc;
         font-size: 20px;
@@ -39,7 +35,6 @@
         width: 90%;
         margin: auto
     }
-
     .content_content {
         width: 90%;
         margin: auto;
@@ -47,12 +42,10 @@
         height: 400px;
         margin-top: 50px
     }
-
     .content_children {
         width: 90%;
         margin: auto
     }
-
     .children_1 {
         width: 80px;
         height: 20px;
@@ -63,12 +56,10 @@
         border-radius: 5px;
         margin-top: 20px
     }
-
     .children_2 {
         font-size: 40px;
         margin-top: 20px
     }
-
     .children_3 {
         width: 100%;
         height: 50px;
@@ -79,19 +70,15 @@
         cursor: pointer;
         text-indent: 10px
     }
-
     .faile_c {
         margin-top: 10px
     }
-
     .text_left {
         padding-left: 10px
     }
-
     .children_4 {
         margin-top: 30px
     }
-
     .children_4_1 {
         width: 30%;
         height: 40px;
@@ -101,13 +88,10 @@
         border: 1px solid #cccccc;
         border-radius: 4px;
         float: left;
-
     }
-
     .margin_left {
         margin-left: 10px
     }
-
     .back_color {
         background-color: darkcyan;
     }
@@ -139,7 +123,6 @@
 <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script>
     //定义提交组件
-
     var Submit = {
         props: ['obj'],
         template: `<div class="children_4_1 margin_left" v-on:click.once="submit(obj)">交卷</div>`,
@@ -154,9 +137,7 @@
                }
             }
         }
-
     }
-
     //定义试题组件
     Vue.component('Subject', {
         components: {
@@ -166,7 +147,6 @@
         data: function () {
             return { count: 0, class_success: false, class_fail: false,user_select:false}
         },
-
         template: `<div class="content_children"> 
         <div class="children_1">{{post.title}}</div>
           <div class="children_2">{{post.problem}}</div>
@@ -178,7 +158,6 @@
         <div class="children_4_1 margin_left back_color">下一题</div>
         <children v-bind:obj="{answer:post.answer,count:this.count,user_select:this.user_select,score:post.score}"></children>
         </div>
-
         </div>`,
         methods: {
             Select: function (messge) {
@@ -186,27 +165,14 @@
                     this.class_success = true;
                     this.class_fail = false;
                     this.user_select=true;
-
                 } else {
                     this.class_success = false;
                     this.class_fail = true;
                     this.user_select=false;
                 }
             }
-
-
-
         }
-
-
-
-
-
     });
-
-
-
-
     new Vue({
         el: '#content_content',
         data: {
@@ -218,14 +184,8 @@
                 answer: true,
                 isTrue: false,
             }
-
-
-
         }
-
     })
-
-
 </script>
 
-</html>
+</html> 
