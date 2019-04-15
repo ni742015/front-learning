@@ -1,9 +1,8 @@
 ### 任务
-vuex学习 + 练习
+使用vue-cli新建模板项目，改写现有练习
 ### 要求
-- 学习官网教程
-- 完成练习
-    - 实现页面中的购物车界面
-    - 点击商品的添加按钮**+**，购物车价格发生变化，尝试用vuex存储数据
+- 使用vue-cli新建模板项目
+- 改写现有练习
+    
 ### 补充
-1. [vuex官网](https://vuex.vuejs.org/zh/)  
+1. [Vue CLI 文档](https://cli.vuejs.org/zh/guide/)  

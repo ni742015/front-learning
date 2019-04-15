@@ -18,7 +18,7 @@
             <div style="clear:both"></div>
         </div>
         <div class="form-Conent">
-            <span class="question-type">{{map.get(dataList[index].type)}}</span>
+            <span class="question-type">{{map.get(dataList[index].type)}}</span> 
             <div class="question-title">{{dataList[index].content}}</div>
             <!-- 变化部分：选项 -->
             <!-- 连线题 -->
@@ -64,7 +64,7 @@
     new Vue({
         el: '#app',
         data: {
-            map: new Map()
+            map: new Map()  //{'join': '连线题'} 
                 .set('join', '连线题')
                 .set('judgment', '判断题')
                 .set('fill', '填空')
