@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vue生命周期学习</title>
-
-
 </head>
 <link rel="stylesheet" href="./style.css">
 
@@ -22,18 +20,18 @@
             <span>开始时间:&nbsp;&nbsp;</span><span>{{beginTime}}</span><span>&nbsp;&nbsp;用时:&nbsp;&nbsp;</span><span>{{time}}</span>
         </div>
 
-       <Answer :length="forms.length"></Answer>
+        <Answer :length="forms.length"></Answer>
 
         <div class="content_content" id="content_content">
-            <Subject v-bind:post="forms" :index="index"></Subject>
+            <Subject v-bind:post="forms" :p_index="index" :judgments="judgment"></Subject>
         </div>
 
         <div class="children_4">
             <div class="children_4_1" @click="beforeProblem" v-if="index!==0">上一题</div>
-            <div class="children_4_1 margin_left back_color" @click="nextProblem" v-if="(index+1)!==forms.length">下一题</div>
-            <div class="children_4_1 margin_left" >交卷</div>
+            <div class="children_4_1 margin_left back_color" @click="nextProblem" v-if="(index+1)!==forms.length">下一题
+            </div>
+            <div class="children_4_1 margin_left">交卷</div>
         </div>
-
     </div>
 
 
@@ -60,14 +58,13 @@
 
     // }
 
-//定义选项卡组件
-   Vue.component('Answer',{
+    //定义选项卡组件
+    Vue.component('Answer', {
         props: ['length',],
-        data:function(){
+        data: function () {
             return {}
         },
-       
-         template:` <div class="answer_Card">
+        template: ` <div class="answer_Card">
             <div class="answer_Card_content">
                 <div class="answer_Card_title">答题卡</div>
                 <div class="answer_Card_numbers" id="answer_Card_numbers">
@@ -78,7 +75,7 @@
                 </div>
             </div>
         </div>`,
-         methods:{
+        methods: {
             changeProplem: function (number, event) {
                 var p = event.target.parentNode.children; //获取父级的所有子节点
                 for (var i = 0; i < p.length; i++) {  //循环
@@ -89,7 +86,7 @@
                 event.target.style.background = "darkcyan";
                 this.$root.index = number;
             },
-          
+
         },
 
     });
@@ -108,66 +105,72 @@
         // components: {
         //     'children': Submit
         // },
-        props: ['post', 'index'],
+        props: ['post', 'p_index', 'judgments'],
         data: function () {
-            return { fill_answer1: '',
-            fill_answer2: '',
-            aq_answer: '',
-            num:0,
+            return {
+                fill_answer1: '',
+                fill_answer2: '',
+                aq_answer: '',
+                num: 0,
+                userMultipleAnswer:[],
+              
             }
         },
         template: `<div class="content_children"> 
-        <div class="children_1" >{{post[index].type}}</div>
-          <div class="children_2">{{post[index].content}}</div>
-          <ol class="Outer"   v-if="post[index].type === '判断题'">
-          <li class="children_3"  >正确</li>
-          <li class="children_3"  >错误</li>
+        <div class="children_1" >{{post[p_index].type}}</div>
+          <div class="children_2">{{post[p_index].content}}</div>
+          <ol class="Outer"   v-if="post[p_index].type === '判断题'">
+          <li class="children_3"  :class="item.check ? 'add_color' :'delete_color'"  v-for="(item,index) in judgments"  @click="selectOptionMultiple(item,index,p_index,3)" >{{item.name}}</li>
+         
           </ol>
 
-          <ol class="Outer"   v-if="post[index].type === '多选题'">
-          <li class="children_3" v-for="i in post[index].options"  >{{i}}</li>
+          <ol class="Outer"   v-if="post[p_index].type === '多选题'">
+          <li class="children_3"    :class="item.check ? 'add_color' :'delete_color'"    v-for="(item,index) in post[p_index].options"   @click="selectOptionMultiple(item,index,p_index,1)"   >{{item.name}}</li>
           </ol>
 
-          <ol class="Outer"   v-if="post[index].type === '单选题'">
-          <li class="children_3" v-for="i in post[index].options" >{{i}}</li>
+          <ol class="Outer"   v-if="post[p_index].type === '单选题'">
+          <li class="children_3"    :class="item.check ? 'add_color' :'delete_color'"   v-for="(item,index) in post[p_index].options" @click="selectOptionMultiple(item,index,p_index,2)" >{{item.name}}</li>
           </ol>
 
-          <ol class="Outer"   v-if="post[index].type === '填空题'">
+          <ol class="Outer"   v-if="post[p_index].type === '填空题'">
           <li  class="children_3_fill" >1.<input type="text" class="text_class" v-model="fill_answer1"/></li>
           <li   class="children_3_fill">2.<input type="text" class="text_class" v-model="fill_answer2"/></li>
           </ol>
 
-          <ol class="Outer"   v-if="post[index].type === '计算题'">
+          <ol class="Outer"   v-if="post[p_index].type === '计算题'">
           <li  class="children_3_fill" >答案:<input type="text" class="text_class" v-model="aq_answer"/></li>
           </ol>
-
         </div>`,
         methods: {
-            selectAnswer:function(event){
-                let p = event.target.parentNode.children; //获取父级的所有子节点
-                for (let i = 0; i < p.length; i++) {  //循环
-                    if (p[i].nodeType == 1 && p[i] != event) {  //如果该节点是元素节点与不是这个节点本身
-                        p[i].style.background = "white"  
-                        break;   //
-                    }
+            selectOptionMultiple: function (item, index, p_index, a) {
+                //  item.item=!item.check;
+                if (a === 1){
+                    this.$root.forms[p_index].options[index].check = !this.$root.forms[p_index].options[index].check;
+                    
                 }
-                event.target.style.background = "darkcyan";
-            }
+                else if (a === 2) {
+                    let form = this.$root.forms[p_index].options;
+                    for (let i = 0; i < form.length; i++) {
+                        if (i !== index)
+                            form[i].check = false;
+                    }
+                    form[index].check = true;
+                }
+                else {
+                    let judgments = this.$root.judgment;
+                    for (let i = 0; i < judgments.length; i++) {
+                        if (i !== index)
+                        judgments[i].check = false;
+                    }
+                    judgments[index].check = true;
+                }
 
+
+
+
+            }
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -182,9 +185,19 @@
     new Vue({
         el: '#content',
         data: {
-            time:0,
+            time: 0,
             index: 0,
             isShow: false,
+            judgment: [
+                {
+                    name: "正确",
+                    check: false
+                }, {
+                    name: "错误",
+                    check: false
+                }],
+
+
             forms: [
                 {
                     id: '1',
@@ -247,12 +260,27 @@
                 }
                 childrens[this.index].style.background = "darkcyan";
             },
-          
+            optionsFn() {
+                for (let j = 0; j < this.forms.length; j++) {
+                    if (this.forms[j].options) {
+                        for (let i = 0; i < this.forms[j].options.length; i++) {
+                            Vue.set(this.forms[j].options, i, {
+                                name: this.forms[j].options[i],
+                                check: false
+                            })
+                        }
+                    }
+                }
+            }
+
 
 
         },
+        created: function () {
+            this.optionsFn();
+        },
         mounted: function () {
-             document.getElementById("answer_Card_numbers").children[0].style.background = "darkcyan";
+            document.getElementById("answer_Card_numbers").children[0].style.background = "darkcyan";
         },
         computed: {
             beginTime: function () {//开始时间
@@ -280,7 +308,7 @@
                 return (clock);
             }
         }
-     
+
 
     })
 
