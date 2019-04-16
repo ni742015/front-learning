@@ -4,7 +4,6 @@
     <title>vue巩固练习</title>
     <link rel="stylesheet" href="./index.css">
 </head>
-
 <body>
     <div id="app">
         <p class="title">测试</p>
@@ -12,7 +11,7 @@
         </p>
         <div class="form-Conent">
             <div>
-                <span class="question-type">{{dataList[index].type}}</span>
+                <span class="question-type">{{index}}</span>
             </div>
             <div v-if="dataList[index].type==='join'">
                 <div class="question-title">{{dataList[index].content}}</div>
@@ -27,16 +26,16 @@
                 <div class="question-title">{{dataList[index].content}}</div>
                 <div :class="item.check || dataList[index].userAnswer===item.name ?'true-answer' :'answer'"
                         v-for="(item,i) in judgmentIsture"
-                        :key="item._id" 
+                        :key="item.name" 
                         @click="radio(i)">
                     {{item.name}}
                 </div>
             </div>
-            <div v-if="dataList[index].type==='fill'">
+            <div v-if="dataList[index].type==='asd'">
                 <div class="question-title">
-                    {{dataList[index].userAnswer[0]}}
+                    {{dataList[index].userAnswer===null?  '':dataList[index].userAnswer[0] }}
                     {{dataList[index].content}}
-                    {{dataList[index].userAnswer[1]}}
+                    {{dataList[index].userAnswer===null ?"":dataList[index].userAnswer[1]}}
                 </div>
                 <div class="inputfill">
                     <input v-model="fill" @keyup.enter="keyup" />
@@ -67,7 +66,7 @@
     new Vue({
         el: '#app',
         data: {
-            index: 0,
+            index: 3,
             now: '07:51',
             time: '181',
             answers: [],
@@ -87,7 +86,7 @@
             ],
             dataList: [
                 {
-                    id: 1,
+                    id: 0,
                     type: 'join',
                     content: '四大名著连一连',
                     leftItems: ['《水浒传》', '《西游记》', '《三国演义》', '《红楼梦》'],
@@ -96,35 +95,35 @@
                     userAnswer: null
                 },
                 {
-                    id: 2,
+                    id: 1,
                     type: 'judgment',
                     content: '所有的苹果都是水果',
                     answer: true,
                     userAnswer: null
                 },
-                // {
-                //     id: 3,
-                //     type: 'judgment',
-                //     content: '所有的苹果都是水果',
-                //     answer: true,
-                //     userAnswer: null
-                // },
                 {
-                    id: 4,
-                    type: 'fill',
+                    id: 2,
+                    type: 'judgment',
+                    content: '所有的苹果都是水果131321',
+                    answer: true,
+                    userAnswer: null
+                },
+                {
+                    id: 3,
+                    type: 'asd',
                     content: '___秋月何时了，往事___',
                     answer: ['春花', '知多少'],
                     userAnswer: null
                 },
                 {
-                    id: 5,
+                    id: 4,
                     type: 'aq',
                     content: '1+2等于几？',
                     answer: '3',
                     userAnswer: null
                 },
                 {
-                    id: 6,
+                    id: 5,
                     type: 'multiple',
                     content: '哪些是对的',
                     options: ['1+1=2', '1+2=3', '1+1=3', '1+2=2'],
@@ -132,7 +131,7 @@
                     userAnswer: null
                 },
                 {
-                    id: 7,
+                    id: 6,
                     type: 'single',
                     content: '1+1=?',
                     options: ['1', '2', '3', '4'],
@@ -147,30 +146,39 @@
         methods: {
             before() {
                 this.index--
+                console.log('21212',this.index);
             },
             next(type) {
-                if (type === 'judgment') {
-                    for (let j = 0; j < this.judgmentIsture.length; j++) {
-                        this.judgmentIsture[j].check = false
-                    }
-                }
-                if (type === 'fill') {
-                    this.fillList = []
-                }
-                console.log('i',this.dataList[this.index].userAnswer);
+                // if (type === 'judgment') {
+                //     for (let j = 1; j < this.judgmentIsture.length; j++) {
+                //         this.judgmentIsture[j].check = false
+                //     }
+                // }
+                // if (type === 'fill') {
+                //     this.fillList = []
+                // }
+                // console.log('qwq',this.index);
                 
-                if (this.dataList[this.index].id===1) {
+                // console.log('i',this.dataList[this.index]);
+                
+                // if (this.dataList[this.index].id===1) {
+                //     this.index++
+                //     return                    
+                // }
+                // if (this.dataList[this.index].userAnswer !== null ) {
                     this.index++
-                    return                    
-                }
-                if (this.dataList[this.index].userAnswer !== null ) {
-                    this.index++
-                console.log('i',this.dataList[this.index].userAnswer);
+                    if(this.index === 3){
+                        // this.index = 4
+                        console.log('asdas',this.dataList[this.index])
+                    }
+
+                    console.log('121',this.index);
+                // console.log('i',this.dataList[num].userAnswer);
                     
-                }
-                else {
-                    alert('请填写完毕后点击')
-                }
+                // }
+                // else {
+                    // alert('请填写完毕后点击')
+                // }
             },
             submit() {
                 let i = this.index

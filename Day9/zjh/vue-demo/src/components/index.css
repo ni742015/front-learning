@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.title{
+    height: 5%;
+    width: 100%;
+    background: darkcyan;
+    color: white;
+    padding: 20px;
+}
+.recording-time{
+    padding: 20px;
+    color:#cccccc;
+}
+.form-Conent{
+    border: 1px solid gray;
+    width: 90%;
+    margin: 0px auto;
+    min-height: 20%;
+    background: white;
+    padding: 10px;
+}
+.topic-Conent{
+    border: 1px solid gray;
+    width: 90%;
+    margin: 0px auto;
+    min-height: 20%;
+    background: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    /* align-items: center; */
+    /* justify-content: center; */
+}
+.topic{
+    border: 1px solid gray;
+    border-radius: 50%;
+    width: 60px;
+    height:60px;
+    text-align: center;
+    line-height: 60px;
+    margin: 15px;
+}
+.checkTopic{
+    color:white;
+    background: darkcyan;
+}
+.question-type{
+    color: white;
+    background: #cccccc;
+    display: inline-flex;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+.question-title{
+    font-size: 2.5rem;
+    margin: 20px 0;
+}
+.true-answer{
+    border: 1px solid gray;
+    padding: 20px;
+    /* font-size: 3rem; */
+    margin: 20px 0;
+    color: white;
+    background: darkcyan;
+}
+.answer{
+    margin: 20px 0;
+    border: 1px solid gray;
+    padding: 20px;
+    /* font-size: 3rem; */
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.before-button{
+    margin: 10px;
+    width: 33%;
+    height: 3rem;
+    font-size: 1.5rem;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+.next-button{
+    margin: 10px;
+    width: 33%;
+    height: 3rem;
+    font-size: 1.5rem;
+    background-color: darkcyan;
+    border: 1px solid gray;
+    border-radius: 10px;
+    color: white;
+}
+
+.submit-button{
+    margin: 10px;  
+    width: 33%;
+    height: 3rem;
+    font-size: 1.5rem;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+.inputfill input{
+    width: 100%;
+    height: 2rem;
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
