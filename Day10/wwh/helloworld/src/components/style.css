@@ -1,0 +1,178 @@
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .heard {
+        width: 100%;
+        height: 50px;
+        background-color: darkcyan;
+        line-height: 50px
+    }
+
+    .title {
+        padding-left: 10px;
+        color: white;
+        font-size: 2rem
+    }
+
+    .content {
+        width: 100%
+    }
+
+    .content_title {
+        color: #cccccc;
+        font-size: 20px;
+        padding-top: 30px;
+        width: 90%;
+        margin: auto
+    }
+
+    .content_content {
+        width: 90%;
+         margin: auto;
+        border: 1px solid #ccc;
+      
+        margin-top: 50px
+    }
+
+    .content_children {
+        width: 90%;
+        margin: auto;
+        padding-bottom: 30px
+    }
+
+    .children_1 {
+        width: 80px;
+        height: 20px;
+        background-color: #cccccc;
+        color: white;
+        text-align: center;
+        line-height: 20px;
+        border-radius: 5px;
+        margin-top: 20px
+    }
+
+    .children_2 {
+        font-size: 40px;
+        margin-top: 20px
+    }
+
+    .children_3 {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        border: 1px solid #ccc;
+      margin-top: 10px;
+        font-size: 30px;
+        cursor: pointer;
+        text-indent: 10px;
+       
+    }
+
+   
+
+    
+
+    .children_4 {
+     
+      height: 40px;
+      width: 90%;
+      margin: auto;
+      margin-top: 30px;
+      padding-bottom: 30px
+    }
+
+    .children_4_1 {
+        width: 30%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        float: left;
+        font-size: 1rem;
+
+    }
+
+    .margin_left {
+        margin-left: 10px
+    }
+
+    .back_color {
+        background-color: darkcyan;
+    }
+   
+    .answer_Card{
+        width: 90%;
+        margin: auto;
+        border: 1px solid #cccccc;
+        margin-top: 30px
+
+    }
+    .answer_Card_title{
+        font-size: 1.5rem;
+        margin-top: 5px
+    }
+    .answer_Card_content{
+        width: 90%;
+        margin: auto
+    }
+    .answer_Card_numbers{
+        margin-top: 30px;
+        width: 100%;
+        padding-bottom: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between
+        
+    }
+    .answer_Card_number{
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;     
+      /* -moz-border-radius: 50%; 
+       -webkit-border-radius: 50%; */
+     border:1px solid #ccc;
+     text-align: center;
+     line-height: 50px;
+     margin-top: 5px
+     
+
+    }
+  
+    .Outer{
+        margin-top: 50px;
+        padding-bottom: 30px;
+        list-style:none
+
+       }
+       .Outer_multiple{
+        margin-top: 50px;
+        padding-bottom: 30px;
+      
+
+       }
+       .text_class{
+        background:none;
+        border:none;
+        border-bottom:1px solid #ccc;
+     height: 50px;
+     width: 80%
+    }
+       .children_3_fill{
+        width: 100%;
+      margin-top: 10px;
+        font-size: 30px;
+        text-indent: 10px;
+
+       }
+       .add_color{
+           background: darkcyan;
+       }
+       .delete_color{
+        background: white;
+
+       }

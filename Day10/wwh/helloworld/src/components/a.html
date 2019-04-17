@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>helloworld</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .end_Answer {
+        width: 100%;
+    }
+
+    .header {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        background-color: darkcyan;
+        color: white
+    }
+
+    .total_index {
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .items {
+        width: 100%;
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between
+    }
+
+    .list {
+        width: 50px;
+     height: 50px;
+     border-radius: 50%;     
+      /* -moz-border-radius: 50%; 
+       -webkit-border-radius: 50%; */
+     border:1px solid #ccc;
+     text-align: center;
+     line-height: 50px;
+     margin-top: 5px
+
+      
+    }
+</style>
+
+<body>
+    <div class="end_Answer">
+        <div class="header">
+            <返回</div> <div class="total_index">总题数：
+        </div>
+        <div class="items">
+            <div>正确题目</div>
+            <div class="item_list"></div>
+        </div>
+
+        <div class="items">
+                <div>错误题目</div>
+                <div class="item_list"></div>
+            </div>
+
+
+
+    </div>
+
+    <!-- built files will be auto injected -->
+</body>
+
+</html>
+
+<script>
+
+</script>
