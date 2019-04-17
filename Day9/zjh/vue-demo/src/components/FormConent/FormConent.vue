@@ -23,12 +23,14 @@
             </div>
             <div v-if="data.type==='fill'">
                 <div class="question-title">
-                    {{data.userAnswer===null ? '' : data.userAnswer[0]}}
+                    {{fill1 ? fill1 : (data.userAnswer===null ? '' : data.userAnswer[0])}}
                     {{data.content}}
-                    {{data.userAnswer===null ? '' : data.userAnswer[1]}}
+                    {{fill2 ? fill2 : (data.userAnswer===null ? '' : data.userAnswer[1])}}
                 </div>
                 <div class="inputfill">
-                    <input v-model="fill" @keyup.enter="keyup" />
+                    <input :style="{border:'3px solid black'}" v-model="fill1" @keyup.enter="keyup(0)" />
+                    <input :style="{border:'3px solid black'}" v-model="fill2" @keyup.enter="keyup(1)" />
+                    
                 </div>
             </div>
             <div v-if="data.type==='aq'">
@@ -39,13 +41,13 @@
             </div>
             <div v-if="data.type==='multiple'">
                 <div class="question-title">{{data.content}}</div>
-                <div :class="item.check ? 'true-answer' :'answer'" v-for="item in data.options" :key="item._id" @click="options(item)">
+                <div :class="item.check ? 'true-answer' :'answer'" v-for="(item,i) in data.options" :key="item._id" @click="options(i)">
                     {{item.name}}
                 </div>
             </div>
             <div v-if="data.type==='single'">
                 <div class="question-title">{{data.content}}</div>
-                <div :class="item.check ? 'true-answer' :'answer'" v-for="item in data.options" :key="item._id" @click="options(item,'single')">
+                <div :class="item.check ? 'true-answer' :'answer'" v-for="(item,i) in data.options" :key="item._id" @click="options(i,'single')">
                     {{item.name}}
                 </div>
             </div>
@@ -65,7 +67,8 @@ export default {
     return {
       answers: [],
       ap: "",
-      fill: "",
+      fill1: "",
+      fill2: "",
       fillList: [],
       fillTime: 0,
       judgmentIsture: [
@@ -78,7 +81,7 @@ export default {
           check: false
         }
       ],
-      typeName:'',
+      typeName: "",
       dataType: [
         {
           name: "连线题",
@@ -113,47 +116,56 @@ export default {
       this.judgmentIsture = [
         {
           name: "正确",
-          check: false
+          check: false,
+          id:true
         },
         {
           name: "错误",
-          check: false
+          check: false,
+          id:false
         }
-      ]
+      ];
     }
   },
   created() {
-    this.checkFn();
     this.typeFn();
+    this.checkFn();
+  },
+  mounted(){
+  },
+  beforeCreate(){
   },
   methods: {
-    typeFn(){
-      this.dataType.map(item=> {
-        if (item.id === this.data.type ) {
-          this.typeName = item.name
+    typeFn() {
+      this.dataType.map(item => {
+        if (item.id === this.data.type) {
+          this.typeName = item.name;
         }
-      })
+        if (this.data.type==="multiple") {
+          this.data.userAnswer = []
+        }
+      });
     },
     radio(i) {
       for (let j = 0; j < this.judgmentIsture.length; j++) {
         this.judgmentIsture[j].check = false;
       }
       this.judgmentIsture[i].check = true;
-      this.data.userAnswer = this.judgmentIsture[i].name;
+      this.data.userAnswer = this.judgmentIsture[i].id;
     },
     keyup(type) {
+      if (type === 0) {
+        this.fillList[0] = this.fill1;
+       this.data.userAnswer = this.fillList;
+        this.fill1 = "";
+      } else if (type === 1) {
+        this.fillList[1] = this.fill2;
+        this.data.userAnswer = this.fillList;        
+        this.fill2 = "";
+      }
       if (type === "ap") {
         this.data.userAnswer = this.ap;
         this.ap = "";
-      } else {
-        this.fillTime++;
-        if (this.fillTime % 2 === 0) {
-          this.fillList[1] = this.fill;
-        } else {
-          this.fillList[0] = this.fill;
-        }
-        this.data.userAnswer = this.fillList;
-        this.fill = "";
       }
     },
     options(i, type) {
@@ -161,13 +173,16 @@ export default {
         for (let index = 0; index < this.data.options.length; index++) {
           this.data.options[index].check = false;
         }
-        i.check = true;
-        this.data.userAnswer = i.name;
+        this.data.options[i].check = true;
+        this.data.userAnswer = this.data.options[i].name;
         return;
       }
-      i.check = !i.check;
-      if (i.check) {
-        this.data.userAnswer += "" + i.name;
+      this.data.options[i].check = !this.data.options[i].check
+      if (this.data.options[i].check) {
+        this.data.userAnswer.push(i)
+      }
+      else{
+        this.data.userAnswer.splice(this.data.userAnswer.indexOf(i),1)
       }
     },
     checkOne(i, type) {
@@ -185,17 +200,19 @@ export default {
     },
     checkFn() {
       if (this.data.type === "join") {
-        for (let j = 0; j < this.data.leftItems.length; j++) {
-          this.$set(this.data.leftItems, j, {
-            name: this.data.leftItems[j],
-            check: false
-          });
-        }
-        for (let j = 0; j < this.data.rightItems.length; j++) {
-          this.$set(this.data.rightItems, j, {
-            name: this.data.rightItems[j],
-            check: false
-          });
+        if (typeof this.data.leftItems[0].name !== "string") {
+              for (let j = 0; j < this.data.leftItems.length; j++) {
+              this.$set(this.data.leftItems, j, {
+                name: this.data.leftItems[j],
+                check: false
+              });
+            }
+            for (let j = 0; j < this.data.rightItems.length; j++) {
+              this.$set(this.data.rightItems, j, {
+                name: this.data.rightItems[j],
+                check: false
+              });
+            }
         }
       }
     },
