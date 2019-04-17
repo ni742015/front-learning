@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <p class="title">测试</p>
-        <p class="recording-time">开始时间: {{now}} &nbsp; &nbsp; 用时: {{time}}分钟
+        <p class="recording-time">开始时间: {{now}} &nbsp; &nbsp; 用时: {{time}}秒
         </p>
         <ChooseTopic 
         :len="dataList.length"  
@@ -17,8 +17,8 @@
   </div>
 </template>
 <script>
-import FormConent from "./FormConent/FormConent"
-import ChooseTopic from "./ChooseTopic/ChooseTopic"
+import FormConent from "./components/FormConent/FormConent"
+import ChooseTopic from "./components/ChooseTopic/ChooseTopic"
 
 import "./index.css";
 export default {
@@ -80,7 +80,7 @@ export default {
           type: "single",
           content: "1+1=?",
           options: ["1", "2", "3", "4"],
-          answer: 1,
+          answer: 2,
           userAnswer: null
         }
       ]
@@ -88,7 +88,7 @@ export default {
   },
   created() {
     this.optionsFn();
-    this.timeStep = setInterval(this.timeSum,2000)
+    this.timeStep = setInterval(this.timeSum,1000)
   },
   computed:{
     now(){
@@ -128,7 +128,16 @@ export default {
       // }
     },
     submit(){
-      alert("提前交卷，0分")
+      let rightLen = 0
+      for (let i = 0; i < this.dataList.length; i++) {
+        if (this.dataList[i].userAnswer && this.dataList[i].type==="multiple") {
+          this.dataList[i].userAnswer.sort((a,b)=>{return a-b})
+        }
+        if (this.dataList[i].answer.toString() === (this.dataList[i].userAnswer===null ? '' : this.dataList[i].userAnswer.toString())) {
+          rightLen++
+        }
+      }
+      this.$router.push({ path: 'last', query: { time: this.time,len :this.dataList.length, rightLen:rightLen}})
       clearInterval(this.timeStep)
     }
   },
