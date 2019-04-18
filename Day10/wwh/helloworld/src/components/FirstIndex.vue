@@ -8,7 +8,7 @@
 
     <div class="content" id="content">
         <div class="content_title">
-            <span>开始时间:&nbsp;&nbsp;</span><span>{{beginTime}}</span><span>&nbsp;&nbsp;用时:&nbsp;&nbsp;</span><span>{{time}}</span>
+            <span>开始时间:&nbsp;&nbsp;</span><span>{{beginTime}}</span><span>&nbsp;&nbsp;用时:&nbsp;&nbsp;</span><span>{{time}}秒</span>
         </div>
 
         <Answer :length="forms.length"></Answer>
@@ -43,6 +43,10 @@ export default {
     time: 0,
     index: 0,
     isShow: false,
+    timeClear:'',
+  
+    
+
    
     judgment: [
       {
@@ -140,6 +144,9 @@ export default {
                 alert("请完成"+(i+1)+"题");
                 return;
             }
+
+clearInterval(this.timeClear);
+
             if(this.forms[i].answer instanceof Array){
                 if(JSON.stringify(this.forms[i].answer)==JSON.stringify(this.forms[i].userAnswer)){
                      success_index.push(i+1);
@@ -161,16 +168,22 @@ export default {
           params:{
               success_index:success_index,
               fail_index:fail_index,
-              total_length:this.forms.length
+              total_length:this.forms.length,
+              end_time:this.time
           }
         });
     },
+
+    timeCount:function(){
+      this.time++;
+    }
 
    
 
   },
   created: function() {
     this.optionsFn();
+    this.timeClear=setInterval(this.timeCount,1000)
   },
   mounted: function() {
     document.getElementById(
