@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import store from "../store/store";
 export default {
   name: "EndAnswer",
   data: function() {

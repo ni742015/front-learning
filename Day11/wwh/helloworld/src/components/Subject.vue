@@ -63,9 +63,10 @@
 
         <script>
 import "./style.css";
+import store from "../store/store"
 export default {
   name: "Subject",
-  props: ["post", "p_index", "judgments"],
+  // props: ["post", "p_index", "judgments"],
   data: function() {
     return {
       fill_answer1: "",
@@ -94,40 +95,54 @@ export default {
             this.userMultipleAnswer.push(i); //多选题用户选择的数组
           }
         }
-        this.$parent.forms[p_index].userAnswer = this.userMultipleAnswer;
+        this.post[p_index].userAnswer = this.userMultipleAnswer;
       } else if (a === 3) {
-        let form = this.$parent.forms[p_index].options;
+        let form = this.post[p_index].options;
         for (let i = 0; i < form.length; i++) {
           if (i !== index) form[i].check = false;
         }
         form[index].check = true;
         this.singleAnswer = index;
-        this.$parent.forms[p_index].userAnswer = this.singleAnswer;
+        this.post[p_index].userAnswer = this.singleAnswer;
       } else {
-        let judgments = this.$parent.judgment;
+        let judgments = this.judgments;
         for (let i = 0; i < judgments.length; i++) {
           if (i !== index) judgments[i].check = false;
         }
         judgments[index].check = true;
         if (index === 0) {
-          this.$parent.forms[p_index].userAnswer = true;
+          this.post[p_index].userAnswer = true;
         } else {
-          this.$parent.forms[p_index].userAnswer = false;
+          this.post[p_index].userAnswer = false;
         }
       }
     },
     inputAq: function(p_index) {
-      this.$parent.forms[p_index].userAnswer = this.aq_answer;
+      this.post[p_index].userAnswer = this.aq_answer;
     },
     inputFill1: function(p_index) {
         this.fillAnswer[0]=this.fill_answer1;
-        this.$parent.forms[p_index].userAnswer = this.fillAnswer;
+        this.post[p_index].userAnswer = this.fillAnswer;
      
     }, inputFill2: function(p_index) {
            this.fillAnswer[1]=this.fill_answer2
-       this.$parent.forms[p_index].userAnswer =  this.fillAnswer;
+       this.post[p_index].userAnswer =  this.fillAnswer;
     }
+  },
+
+computed: {
+
+  post:function(){
+    return store.state.forms;
+  },
+  p_index:function(){
+     return store.state.index;
+  },
+  judgments:function(){
+    return store.state.a.judgment;
   }
+}
+
 };
 </script>
         
