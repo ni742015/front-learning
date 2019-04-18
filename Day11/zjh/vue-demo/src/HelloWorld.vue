@@ -21,6 +21,7 @@ import FormConent from "./components/FormConent/FormConent"
 import ChooseTopic from "./components/ChooseTopic/ChooseTopic"
 
 import "./index.css";
+import { mapState } from 'vuex'
 export default {
   name: "HelloWorld",
   data() {
@@ -29,65 +30,9 @@ export default {
       newTime:'',
       time: 0,
       timeStep:'',
-      dataList: [
-        {
-          id: 0,
-          type: "join",
-          content: "四大名著连一连",
-          leftItems: ["《水浒传》", "《西游记》", "《三国演义》", "《红楼梦》"],
-          rightItems: ["罗贯中", "施耐庵", "曹雪芹", "吴承恩"],
-          answer: [[0, 1], [1, 3], [2, 0], [4, 2]],
-          userAnswer: null
-        },
-        {
-          id: 1,
-          type: "judgment",
-          content: "所有的苹果都是水果",
-          answer: true,
-          userAnswer: null
-        },
-        {
-          id: 2,
-          type: "judgment",
-          content: "所有的苹果都是水果131321",
-          answer: true,
-          userAnswer: null
-        },
-        {
-          id: 3,
-          type: "fill",
-          content: "___秋月何时了，往事___",
-          answer: ["春花", "知多少"],
-          userAnswer: null
-        },
-        {
-          id: 4,
-          type: "aq",
-          content: "1+2等于几？",
-          answer: "3",
-          userAnswer: null
-        },
-        {
-          id: 5,
-          type: "multiple",
-          content: "哪些是对的",
-          options: ["1+1=2", "1+2=3", "1+1=3", "1+2=2"],
-          answer: [0, 1],
-          userAnswer: null
-        },
-        {
-          id: 6,
-          type: "single",
-          content: "1+1=?",
-          options: ["1", "2", "3", "4"],
-          answer: 2,
-          userAnswer: null
-        }
-      ]
     };
   },
   created() {
-    this.optionsFn();
     this.timeStep = setInterval(this.timeSum,1000)
   },
   computed:{
@@ -96,7 +41,8 @@ export default {
       let Hours = newTime.getHours()>=10 ? newTime.getHours() : "0"+newTime.getHours()
       let Minutes = newTime.getMinutes()>=10 ? newTime.getMinutes() : "0"+newTime.getMinutes()
       return Hours+":"+Minutes
-    }
+    },
+    ...mapState(['dataList'])
   },
   methods: {
     timeSum(){
@@ -104,40 +50,33 @@ export default {
     },
     check(i){
       this.index = i
+        console.log('当前题目所选',this.dataList[this.index].userAnswer);
     },
-    optionsFn() {
-      for (let j = 0; j < this.dataList.length; j++) {
-        if (this.dataList[j].options) {
-          for (let i = 0; i < this.dataList[j].options.length; i++) {
-            this.$set(this.dataList[j].options, i, {
-              name: this.dataList[j].options[i],
-              check: false
-            });
-          }
-        }
-      }
-    },
+
     before() {
       this.index--;
     },
     next() {
       // if (this.dataList[this.index].userAnswer !== null) {
+        console.log('当前题目所选',this.dataList[this.index].userAnswer);
         this.index++;
       // } else {
       //   alert("请填写完毕后点击");
       // }
     },
     submit(){
-      let rightLen = 0
-      for (let i = 0; i < this.dataList.length; i++) {
-        if (this.dataList[i].userAnswer && this.dataList[i].type==="multiple") {
-          this.dataList[i].userAnswer.sort((a,b)=>{return a-b})
-        }
-        if (this.dataList[i].answer.toString() === (this.dataList[i].userAnswer===null ? '' : this.dataList[i].userAnswer.toString())) {
-          rightLen++
-        }
-      }
-      this.$router.push({ path: 'last', query: { time: this.time,len :this.dataList.length, rightLen:rightLen}})
+      // let rightLen = 0
+      // for (let i = 0; i < this.dataList.length; i++) {
+      //   if (this.dataList[i].userAnswer && this.dataList[i].type==="multiple") {
+      //     this.dataList[i].userAnswer.sort((a,b)=>{return a-b})
+      //   }
+      //   if (this.dataList[i].answer.toString() === (this.dataList[i].userAnswer===null ? '' : this.dataList[i].userAnswer.toString())) {
+      //     rightLen++
+      //   }
+      // }
+      console.log('dataAn',this.dataList);
+      
+      // this.$router.push({ path: 'last', query: { time: this.time,len :this.dataList.length, rightLen:rightLen}})
       clearInterval(this.timeStep)
     }
   },

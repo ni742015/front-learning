@@ -115,3 +115,12 @@
     font-size: 1.5rem;
     margin: 20px 0;
 }
+.single{
+    margin: 20px 0;
+    border: 1px solid gray;
+    padding: 20px;
+}
+.single:focus{
+    color:white;
+    background: darkcyan;
+}

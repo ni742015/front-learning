@@ -14,7 +14,7 @@
             </div>
             <div v-if="data.type==='judgment'">
                 <div class="question-title">{{data.content}}</div>
-                <div :class="item.check || data.userAnswer===item.name ?'true-answer' :'answer'"
+                <div :class="item.check || data.userAnswer===item.id ?'true-answer' :'answer'"
                         v-for="(item,i) in judgmentIsture"
                         :key="item._id" 
                         @click="radio(i)">
@@ -30,7 +30,6 @@
                 <div class="inputfill">
                     <input :style="{border:'3px solid black'}" v-model="fill1" @keyup.enter="keyup(0)" />
                     <input :style="{border:'3px solid black'}" v-model="fill2" @keyup.enter="keyup(1)" />
-                    
                 </div>
             </div>
             <div v-if="data.type==='aq'">
@@ -41,19 +40,19 @@
             </div>
             <div v-if="data.type==='multiple'">
                 <div class="question-title">{{data.content}}</div>
-                <div :class="item.check ? 'true-answer' :'answer'" v-for="(item,i) in data.options" :key="item._id" @click="options(i)">
-                    {{item.name}}
+                <div :class="data.userAnswer.indexOf(i)!==(-1) ? 'true-answer' :'answer'" v-for="(item,i) in data.options" :key="item._id" @click="options(i)">
+                    {{item}}
                 </div>
             </div>
             <div v-if="data.type==='single'">
                 <div class="question-title">{{data.content}}</div>
-                <div :class="item.check ? 'true-answer' :'answer'" v-for="(item,i) in data.options" :key="item._id" @click="options(i,'single')">
-                    {{item.name}}
+                <div :class="['single',data.userAnswer===item ?  'true-answer' :'answer']" :tabindex="i" v-for="(item,i) in data.options" @click="options(i,'single')" :key="item._id">
+                    {{item}}
                 </div>
             </div>
             <Buttons 
             :index="index" 
-            :len="len" 
+            :len="len"
             @next="next"
             @before="before"
             @submit="submit"></Buttons>
@@ -61,6 +60,7 @@
 </template>
 <script>
 import Buttons from "./Buttons/Buttons";
+import { mapMutations  } from 'vuex'
 export default {
   name: "FormConent",
   data() {
@@ -71,17 +71,18 @@ export default {
       fill2: "",
       fillList: [],
       fillTime: 0,
-      judgmentIsture: [
+      judgmentIsture:[
         {
           name: "正确",
-          check: false
+          check: false,
+          id:true
         },
         {
           name: "错误",
-          check: false
+          check: false,
+          id:false
         }
       ],
-      typeName: "",
       dataType: [
         {
           name: "连线题",
@@ -110,48 +111,36 @@ export default {
       ]
     };
   },
-  watch: {
-    data() {
-      this.typeFn();
-      this.judgmentIsture = [
-        {
-          name: "正确",
-          check: false,
-          id:true
-        },
-        {
-          name: "错误",
-          check: false,
-          id:false
+  computed:{
+    typeName() {
+      let typeName = ''
+      if (this.data.type==='multiple') {
+        this.data.userAnswer = []
+      }
+      for (let i = 0; i < this.dataType.length; i++) {
+        if (this.data.type === this.dataType[i].id ) {
+           typeName = this.dataType[i].name
         }
-      ];
-    }
+      }
+      return typeName
+    },
   },
   created() {
-    this.typeFn();
-    this.checkFn();
-  },
-  mounted(){
-  },
-  beforeCreate(){
+    this.checkFn()
   },
   methods: {
-    typeFn() {
-      this.dataType.map(item => {
-        if (item.id === this.data.type) {
-          this.typeName = item.name;
-        }
-        if (this.data.type==="multiple") {
-          this.data.userAnswer = []
-        }
-      });
-    },
+    // ...mapMutations({
+    //   add: 'changData' // 将 `this.add()` 映射为 `this.$store.commit('changData')`
+    // }),
     radio(i) {
       for (let j = 0; j < this.judgmentIsture.length; j++) {
         this.judgmentIsture[j].check = false;
       }
       this.judgmentIsture[i].check = true;
       this.data.userAnswer = this.judgmentIsture[i].id;
+
+      //修改store
+      // this.add({i:i,userAnswer:this.data.userAnswer})
     },
     keyup(type) {
       if (type === 0) {
@@ -170,20 +159,17 @@ export default {
     },
     options(i, type) {
       if (type === "single") {
-        for (let index = 0; index < this.data.options.length; index++) {
-          this.data.options[index].check = false;
-        }
-        this.data.options[i].check = true;
-        this.data.userAnswer = this.data.options[i].name;
+        this.data.userAnswer = this.data.options[i];
         return;
       }
-      this.data.options[i].check = !this.data.options[i].check
-      if (this.data.options[i].check) {
-        this.data.userAnswer.push(i)
+      if (this.answers.indexOf(i)===(-1)) {
+        this.answers.push(i)
       }
       else{
-        this.data.userAnswer.splice(this.data.userAnswer.indexOf(i),1)
+        this.answers.splice(this.answers.indexOf(i),1)
       }
+      this.data.userAnswer = this.answers
+      console.log('this.data.userAnswer',this.data.userAnswer);
     },
     checkOne(i, type) {
       if (type === "a") {
