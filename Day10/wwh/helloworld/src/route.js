@@ -15,5 +15,4 @@ export default new Router({
     { path: '/FirstIndex', name: 'FirstIndex', component: FirstIndex },
     { path: '/EndAnswer',  name: 'EndAnswer', component: EndAnswer},
   ]
-
 })

@@ -40,7 +40,7 @@
             </div>
             <div v-if="data.type==='multiple'">
                 <div class="question-title">{{data.content}}</div>
-                <div :class="data.userAnswer.indexOf(i)!==(-1) ? 'true-answer' :'answer'" v-for="(item,i) in data.options" :key="item._id" @click="options(i)">
+                <div :class="answers.indexOf(i)!==(-1) ? 'true-answer' :'answer'" v-for="(item,i) in data.options" :key="item._id" @click="options(i)">
                     {{item}}
                 </div>
             </div>

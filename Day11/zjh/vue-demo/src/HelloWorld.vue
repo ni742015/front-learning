@@ -50,7 +50,7 @@ export default {
     },
     check(i){
       this.index = i
-        console.log('当前题目所选',this.dataList[this.index].userAnswer);
+        // console.log('当前题目所选',this.dataList[this.index].userAnswer);
     },
 
     before() {
@@ -74,7 +74,7 @@ export default {
       //     rightLen++
       //   }
       // }
-      console.log('dataAn',this.dataList);
+      // console.log('dataAn',this.dataList);
       
       // this.$router.push({ path: 'last', query: { time: this.time,len :this.dataList.length, rightLen:rightLen}})
       clearInterval(this.timeStep)
